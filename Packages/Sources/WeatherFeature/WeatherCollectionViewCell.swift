@@ -72,11 +72,10 @@ final class WeatherCollectionViewCell: UICollectionViewCell {
     }
 
     func configure(with consolidatedWeather: WeatherResponse.ConsolidatedWeather) {
-        let iconTintColor = makeIconColor(from: consolidatedWeather.weatherStateAbbr)
         titleLabel.text = dateFormatter.string(from: consolidatedWeather.applicableDate)
-        iconImageView.image = makeIconImage(from: consolidatedWeather.weatherStateAbbr)
-        iconImageView.tintColor = iconTintColor
-        iconBackgroundView.backgroundColor = iconTintColor?.withAlphaComponent(0.2)
+        iconImageView.image = consolidatedWeather.weatherStateAbbr?.iconImage
+        iconImageView.tintColor = consolidatedWeather.weatherStateAbbr?.tintColor
+        iconBackgroundView.backgroundColor = consolidatedWeather.weatherStateAbbr?.tintColor.withAlphaComponent(0.2)
     }
 }
 
@@ -125,10 +124,12 @@ private extension WeatherCollectionViewCell {
     }
 }
 
-private extension WeatherCollectionViewCell {
+// MARK: - Private Extension
 
-    func makeIconImage(from weatherStateAbbr: WeatherResponse.ConsolidatedWeather.WeatherStateAbbr?) -> UIImage? {
-        switch weatherStateAbbr {
+private extension WeatherResponse.ConsolidatedWeather.WeatherStateAbbr {
+
+    var iconImage: UIImage? {
+        switch self {
         case .snow:
             return UIImage(systemName: "snow")
         case .sleet:
@@ -149,13 +150,11 @@ private extension WeatherCollectionViewCell {
             return UIImage(systemName: "cloud.fill")
         case .clear:
             return UIImage(systemName: "sun.max.fill")
-        default:
-            return UIImage(systemName: "questionmark.circle.fill")
         }
     }
 
-    func makeIconColor(from weatherStateAbbr: WeatherResponse.ConsolidatedWeather.WeatherStateAbbr?) -> UIColor? {
-        switch weatherStateAbbr {
+    var tintColor: UIColor {
+        switch self {
         case .snow, .sleet, .hail:
             return .systemTeal
         case .thunderstorm:
@@ -166,8 +165,6 @@ private extension WeatherCollectionViewCell {
             return .systemGray
         case .clear:
             return .systemOrange
-        default:
-            return .systemBlue
         }
     }
 }
