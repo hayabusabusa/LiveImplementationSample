@@ -17,7 +17,7 @@ public extension WeatherAPIClient {
                 .eraseToAnyPublisher()
         },
         search: { _ in
-            Just(WeatherResponse(consolidatedWeather: []))
+            Just([])
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
@@ -47,7 +47,7 @@ public extension WeatherAPIClient {
                 .eraseToAnyPublisher()
         },
         search: { _ in
-            Just(WeatherResponse(consolidatedWeather: []))
+            Just([])
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }

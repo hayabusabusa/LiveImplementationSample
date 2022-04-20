@@ -19,7 +19,10 @@ public extension WeatherAPIClient {
                 .eraseToAnyPublisher()
         },
         search: { _ in
-            Fail(error: NSError(domain: "", code: 1))
+            URLSession.shared.dataTaskPublisher(for: URL(string: "https://www.metaweather.com/api/location/search/?lattlong=36.96,-122.02")!)
+                .map { $0.data }
+                .decode(type: [LocationSearchResponse].self, decoder: weatherJSONDecoder)
+                .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
     )
