@@ -7,7 +7,27 @@
 
 import SwiftUI
 import UIKit
+import SharedModel
 import WeatherAPIClient
+
+private extension WeatherCollectionViewCell {
+
+    struct Wrapped: UIViewRepresentable {
+        typealias UIViewType = WeatherCollectionViewCell
+
+        let consolidatedWeather: WeatherResponse.ConsolidatedWeather
+
+        func updateUIView(_ uiView: WeatherCollectionViewCell, context: Context) {
+
+        }
+
+        func makeUIView(context: Context) -> WeatherCollectionViewCell {
+            let cell = WeatherCollectionViewCell()
+            cell.configure(with: consolidatedWeather)
+            return cell
+        }
+    }
+}
 
 private extension WeatherViewController {
 
@@ -29,6 +49,20 @@ private extension WeatherViewController {
 struct WeatherViewController__Preview: PreviewProvider {
 
     static var previews: some View {
-        WeatherViewController.Wrapped()
+        Group {
+            WeatherCollectionViewCell.Wrapped(
+                consolidatedWeather: .init(
+                    applicableDate: Date(),
+                    id: 1,
+                    maxTemp: 10,
+                    minTemp: 20,
+                    theTemp: 30,
+                    weatherStateAbbr: .clear
+                )
+            )
+                .previewLayout(.fixed(width: 320, height: 80))
+
+            WeatherViewController.Wrapped()
+        }
     }
 }
