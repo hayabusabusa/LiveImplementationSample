@@ -18,8 +18,8 @@ public extension WeatherAPIClient {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         },
-        search: { _ in
-            URLSession.shared.dataTaskPublisher(for: URL(string: "https://www.metaweather.com/api/location/search/?lattlong=36.96,-122.02")!)
+        search: { coordinate in
+            URLSession.shared.dataTaskPublisher(for: URL(string: "https://www.metaweather.com/api/location/search/?lattlong=\(coordinate.latitude),\(coordinate.longitude)")!)
                 .map { $0.data }
                 .decode(type: [LocationSearchResponse].self, decoder: weatherJSONDecoder)
                 .receive(on: DispatchQueue.main)
