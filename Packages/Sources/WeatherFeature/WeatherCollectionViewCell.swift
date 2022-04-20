@@ -172,6 +172,6 @@ private extension WeatherResponse.ConsolidatedWeather.WeatherStateAbbr {
 private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.locale = .current
-    formatter.setLocalizedDateFormatFromTemplate("dMMM")
+    formatter.setLocalizedDateFormatFromTemplate("yyyyddMM")
     return formatter
 }()

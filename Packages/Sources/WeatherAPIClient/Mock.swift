@@ -23,7 +23,7 @@ public extension WeatherAPIClient {
         }
     )
 
-    static let successed = Self.init(
+    static let mock = Self.init(
         weather: {
             Just(WeatherResponse(consolidatedWeather: [
                 .init(

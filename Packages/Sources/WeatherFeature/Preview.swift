@@ -19,7 +19,7 @@ private extension WeatherViewController {
         }
 
         func makeUIViewController(context: Context) -> WeatherViewController {
-            let viewModel = WeatherViewModel(apiClient: .successed)
+            let viewModel = WeatherViewModel(apiClient: .mock)
             let vc = WeatherViewController(viewModel: viewModel)
             return vc
         }
